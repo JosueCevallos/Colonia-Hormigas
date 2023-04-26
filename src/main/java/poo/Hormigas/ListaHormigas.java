@@ -45,7 +45,7 @@ public class ListaHormigas {
         String contenido="";
         for(int i=0; i<listaHormigas.size(); i++)
         {
-           contenido=contenido+listaHormigas.get(i).getMiId()+" ";
+           contenido=contenido+listaHormigas.get(i).getMiId(listaHormigas.get(i).getTipo())+" ";
         }
         tf.setText(contenido);
         
@@ -56,7 +56,7 @@ public class ListaHormigas {
         String contenido="";
         for(int i=0; i<listaHormigas.size(); i++)
         {
-           contenido=contenido+listaHormigas.get(i).getMiId()+" ";
+           contenido=contenido+listaHormigas.get(i).getMiId(listaHormigas.get(i).getTipo())+" ";
         }
         tA.setText(contenido);
         
