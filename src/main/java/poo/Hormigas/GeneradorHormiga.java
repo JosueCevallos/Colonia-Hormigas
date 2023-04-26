@@ -24,8 +24,17 @@ public class GeneradorHormiga extends Thread{
     
     public void run(){
         
-        h = new Hormiga(1,"obrera",c);
-        h.start();
+        try {
+            
+            Random rand = new Random();
+            Thread.sleep(rand.nextInt(3501)+800);
+            for(int i=1;i<5+1;i++){
+                h = new Hormiga(i,"obrera",c);
+                h.start();
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GeneradorHormiga.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
         
