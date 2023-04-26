@@ -56,11 +56,13 @@ public class Colonia {
         undComZonaComer.setText(String.valueOf(comZonaComer));
     }
     
+    // ***************+ BLOQUE FUNCIONES ENTRADA Y SALIDA *******************
     public void entraColonia(Hormiga h){
         
         try {
             entrada.acquire();
-            System.out.println("Hormiga "+h.getMiId()+" entra a la colonia");
+            Thread.sleep(100);
+            System.out.println(h.getMiId(h.getTipo())+" entra a la colonia");
             entrada.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(Colonia.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,19 +72,35 @@ public class Colonia {
     public void saleColonia(Hormiga h, int salida){
         
         try {
-            System.out.println("Hormiga"+h.getMiId()+" ha elegido la puerta "+salida);
+            System.out.println(h.getMiId(h.getTipo())+" ha elegido la puerta "+salida);
             if(salida==1){
                 salida1.acquire();
-                System.out.println("Hormiga "+h.getMiId()+" sale por salida 1");
+                Thread.sleep(100);
+                System.out.println(h.getMiId(h.getTipo())+" sale por salida 1");
                 salida1.release();
                 
             }else{
                 salida2.acquire();
-                System.out.println("Hormiga "+h.getMiId()+" sale por salida 2");
+                Thread.sleep(100);
+                System.out.println(h.getMiId(h.getTipo())+" sale por salida 2");
                 salida2.release();
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(Colonia.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    //***************** FIN BLOQUE FUNCIONES ENTRADA Y SALIDA ********************
+
+    public void recogeAlimentos(Hormiga h){
+        
+        try {
+            listaBuscanComida.meter(h);
+            System.out.println(h.getMiId(h.getTipo())+" recoge 5 alimentos");
+            Thread.sleep(3900);
+            listaBuscanComida.sacar(h);
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Colonia.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
 }
