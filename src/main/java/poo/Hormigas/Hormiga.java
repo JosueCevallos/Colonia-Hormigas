@@ -26,8 +26,13 @@ public class Hormiga extends Thread{
         switch(tipo){
             
             case "obrera":
-                System.out.println("obrera");
-                c.comprobarInterfaz(this);
+                //c.comprobarInterfaz(this);
+                
+                //hormiga IMPAR
+                c.entraColonia(this);
+                c.saleColonia(this, eligeSalida());
+                
+                //HORMIGA PAR
                 
                 break;
             case "soldado":
@@ -44,5 +49,11 @@ public class Hormiga extends Thread{
     public int getMiId() {
         
         return this.id;
+    }
+    
+    public int eligeSalida(){
+        
+        Random rand = new Random();
+        return rand.nextInt(2)+1;
     }
 }
