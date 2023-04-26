@@ -1,5 +1,8 @@
 package poo.Colonia;
 
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import poo.Hormigas.*;
@@ -15,6 +18,11 @@ public class Colonia {
                     listaHacenInstruccion, listaDescansan, listaComiendo, listaRefugio;
     private JTextField undComA, undComZonaComer;
     private int comAlmacen=2, comZonaComer=4;
+    
+    //MECANISMOS DE SINCRONIZACIÓN PARA ENTRADAS Y SALIDAS
+    Semaphore entrada = new Semaphore(1);
+    Semaphore salida1 = new Semaphore(1);
+    Semaphore salida2 = new Semaphore(1);
     
     public Colonia(JTextField tfBuscanComida, JTextArea tfRepelenInsecto, JTextField tfAlmacenComida, JTextField tfLlevandoComida,
                 JTextField tfHacenInstruccion, JTextField tfDescansando, JTextField tfComAlmacen, JTextField tfComZonaComer,
@@ -46,5 +54,35 @@ public class Colonia {
         listaRefugio.meter(h);
         undComA.setText(String.valueOf(comAlmacen));
         undComZonaComer.setText(String.valueOf(comZonaComer));
+    }
+    
+    public void entraColonia(Hormiga h){
+        
+        try {
+            entrada.acquire();
+            System.out.println("Hormiga "+h.getMiId()+" entra a la colonia");
+            entrada.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Colonia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void saleColonia(Hormiga h, int salida){
+        
+        try {
+            System.out.println("Hormiga"+h.getMiId()+" ha elegido la puerta "+salida);
+            if(salida==1){
+                salida1.acquire();
+                System.out.println("Hormiga "+h.getMiId()+" sale por salida 1");
+                salida1.release();
+                
+            }else{
+                salida2.acquire();
+                System.out.println("Hormiga "+h.getMiId()+" sale por salida 2");
+                salida2.release();
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Colonia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
