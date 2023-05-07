@@ -27,7 +27,7 @@ public class GeneradorHormiga extends Thread{
         try {
             
             Random rand = new Random();
-            Thread.sleep(rand.nextInt(3501)+800);
+            Thread.sleep(rand.nextInt(3501)+800); //800 - 3500
             for(int i=1;i<2+1;i++){
                 h = new Hormiga(i,"obrera",c);
                 h.start();

@@ -4,6 +4,8 @@ package poo.Hormigas;
  * @author josue
  */
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import poo.Colonia.*;
 
 public class Hormiga extends Thread{
@@ -12,12 +14,14 @@ public class Hormiga extends Thread{
     private String tipo;
     //private String tiposH[] = {"obrera","soldado","cria"};
     private Colonia c;
+    private int iteraciones;
     
     public Hormiga(int id, String tipo, Colonia c){
         
         this.id=id;
         this.tipo=tipo;
         this.c =c;
+        
     }
     
     public void run(){
@@ -25,22 +29,43 @@ public class Hormiga extends Thread{
         
         switch(tipo){
             
-            case "obrera":
-                //c.comprobarInterfaz(this);
+            //while para que nunca terminen
+            case "obrera": 
                 
-                //hormiga IMPAR
-                c.entraColonia(this);
-                c.saleColonia(this, eligeSalida());
-                c.recogeAlimentos(this);
-                c.entraColonia(this);
+                if (id%2==0){
+                    //hormiga PAR
+                    c.entraColonia(this);
+                    while(true){
+                        
+                        c.recogeComidaAlmacen(this);
+                        c.trasladaComida(this);
+                        c.depositaAlimentos(this);
+                        this.iteraciones++;
+                        if (iteraciones==5){
+                            System.out.println("hormiga descansa");
+                        }
+                        System.out.println(this.getMiId(tipo)+"lleva "+getIteraciones());
+                    }
+                    
+                }else { //hormiga IMPAR
+                    c.entraColonia(this);
+                    while(true){
+                        c.buscaComida(this);
+                        c.guardaComidaA(this);
+                        this.iteraciones++;
+                        System.out.println(this.getMiId(tipo)+" lleva "+this.getIteraciones());
+                        if(iteraciones==5){ //SERIAN 10
+                            System.out.println(this.getMiId(tipo)+" descansa");
+                        }
+                    }       
+                }    
                 
-                
-                //HORMIGA PAR
-                
-                break;
             case "soldado":
                 System.out.println("soldado");
-                break;
+                while(true){
+                    System.out.println("hola");
+                }
+                //break; EL BREAK NUNCA SE ALCANZARIA POR EL WHILE (true)
             case "cria":
                 System.out.println("cria");
                 break;
@@ -96,5 +121,9 @@ public class Hormiga extends Thread{
         
         Random rand = new Random();
         return rand.nextInt(2)+1;
+    }
+    
+    public int getIteraciones(){
+        return this.iteraciones;
     }
 }
