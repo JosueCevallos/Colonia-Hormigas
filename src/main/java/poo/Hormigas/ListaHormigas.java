@@ -3,19 +3,23 @@ package poo.Hormigas;
 import java.util.ArrayList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import poo.Controladores.Pausar;
 
 public class ListaHormigas {
     
     private ArrayList<Hormiga> listaHormigas = new ArrayList <Hormiga>();
     private JTextField tf;
     private JTextArea tA;
+    private Pausar p;
     
-    public ListaHormigas(JTextField tf){
+    public ListaHormigas(JTextField tf, Pausar p){
         this.tf=tf;
+        this.p = p;
     }
     
-    public ListaHormigas(JTextArea tA){
+    public ListaHormigas(JTextArea tA, Pausar p){
         this.tA=tA;
+        this.p = p;
     }
     
     public synchronized void meter(Hormiga h){
@@ -48,6 +52,7 @@ public class ListaHormigas {
            contenido=contenido+listaHormigas.get(i).getMiId(listaHormigas.get(i).getTipo())+" ";
         }
         tf.setText(contenido);
+        p.comprobar();
         
     }
     
@@ -59,6 +64,7 @@ public class ListaHormigas {
            contenido=contenido+listaHormigas.get(i).getMiId(listaHormigas.get(i).getTipo())+" ";
         }
         tA.setText(contenido);
+        p.comprobar();
         
     }
 }
