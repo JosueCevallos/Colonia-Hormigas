@@ -130,6 +130,7 @@ public class Colonia {
     public void guardaComidaA(Hormiga h){
         almacen.acceder(h, hormigasAlmacen);
         almacen.sumaComida(5);
+        p.comprobar();
         System.out.println(h.getMiId(h.getTipo()) + " ha dejado 5 alimentos");
         Random r = new Random();
         espera(4000, 2000);
@@ -139,6 +140,7 @@ public class Colonia {
     public void recogeComidaAlmacen(Hormiga h){
         almacen.acceder(h, hormigasAlmacen);
         almacen.restaComida(5);
+        p.comprobar();
         //espera(2000, 1000);
         System.out.println(h.getMiId(h.getTipo()) + " se lleva 5 alimentos");
         almacen.salir(h, hormigasAlmacen);
