@@ -4,70 +4,85 @@ package poo.Hormigas;
  * @author josue
  */
 import java.util.Random;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import poo.Colonia.*;
+import poo.Controladores.Pausar;
 
 public class Hormiga extends Thread{
     
+    private Colonia c;
     private int id;
     private String tipo;
-    //private String tiposH[] = {"obrera","soldado","cria"};
-    private Colonia c;
     private int iteraciones;
     
-    public Hormiga(int id, String tipo, Colonia c){
+    public Hormiga(Colonia c, String tipo, int id){
         
-        this.id=id;
-        this.tipo=tipo;
         this.c =c;
-        
+        this.tipo = tipo;
+        this.id = id;
     }
     
+    @Override
     public void run(){
         
         
-        switch(tipo){
-            
-            //while para que nunca terminen
-            case "obrera": 
+        switch(this.tipo){
+            //while para que nunca terminenÇ
+            //SOUT(NACE HORMIGA ... CONCYCLIBARRIER)
+            case "obrera":
                 
                 if (id%2==0){
                     //hormiga PAR
                     c.entraColonia(this);
                     while(true){
-                        
+                        //p.comprobar();
                         c.recogeComidaAlmacen(this);
+                        //p.comprobar();
                         c.trasladaComida(this);
+                        //p.comprobar();
                         c.depositaAlimentos(this);
+                        //p.comprobar();
                         this.iteraciones++;
                         if (iteraciones==5){
-                            System.out.println("hormiga descansa");
+                            c.come(this);
+                            //p.comprobar();
+                            c.descansa(this);
+                            //p.comprobar();
+                            this.iteraciones=0;
                         }
-                        System.out.println(this.getMiId(tipo)+"lleva "+getIteraciones());
+                        System.out.println(this.getMiId(this.getTipo())+"lleva "+getIteraciones());
                     }
                     
                 }else { //hormiga IMPAR
                     c.entraColonia(this);
                     while(true){
+                        //p.comprobar();
                         c.buscaComida(this);
+                        //p.comprobar();
                         c.guardaComidaA(this);
+                        //p.comprobar();
                         this.iteraciones++;
                         System.out.println(this.getMiId(tipo)+" lleva "+this.getIteraciones());
                         if(iteraciones==5){ //SERIAN 10
-                            System.out.println(this.getMiId(tipo)+" descansa");
+                            //p.comprobar();
+                            c.come(this);
+                            //p.comprobar();
+                            c.descansa(this);
+                            //p.comprobar();
+                            this.iteraciones=0;
                         }
+                        System.out.println("HOLA SOY OBRERA IMPAR "+this.getMiId(this.getTipo()));
                     }       
                 }    
-                
+
             case "soldado":
-                System.out.println("soldado");
-                while(true){
-                    System.out.println("hola");
-                }
+                System.out.println("HOLA SOY SOLDADO "+this.getMiId(this.getTipo()));
                 //break; EL BREAK NUNCA SE ALCANZARIA POR EL WHILE (true)
+                break;
             case "cria":
-                System.out.println("cria");
+                System.out.println("HOLA SOY CRIA "+this.getMiId(this.getTipo()));
                 break;
             default: 
                 System.out.println("tipo no valido");
@@ -125,5 +140,9 @@ public class Hormiga extends Thread{
     
     public int getIteraciones(){
         return this.iteraciones;
+    }
+    
+    public void setTipo(String t){
+        this.tipo = t;
     }
 }
