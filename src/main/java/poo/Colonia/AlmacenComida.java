@@ -63,6 +63,7 @@ public class AlmacenComida {
                 
                 faltaComida.await();
             }
+            Thread.sleep((long) (Math.random()*2000+1000));
             undsComida = undsComida-n;
             comAlmacen.setText(String.valueOf(undsComida));
             

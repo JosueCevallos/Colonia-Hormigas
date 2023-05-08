@@ -2,6 +2,7 @@ package poo.Main;
 
 import poo.Hormigas.*;
 import poo.Colonia.*;
+import poo.Controladores.Pausar;
 
 /**
  *
@@ -9,13 +10,12 @@ import poo.Colonia.*;
  */
 public class Interfaz extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Interfaz
-     */
+    private Pausar p = new Pausar();
+    
     public Interfaz() {
         initComponents();
         Colonia c = new Colonia(jTextField1, jTextArea1, jTextField2, jTextField3, jTextField4, jTextField5,
-                                jTextField6, jTextField7, jTextArea2, jTextArea3);
+                                jTextField6, jTextField7, jTextArea2, jTextArea3, p);
         GeneradorHormiga gh = new GeneradorHormiga(c);
         gh.start();
     }
@@ -111,8 +111,18 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTextArea3);
 
         jButton1.setText("Pausar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Reanudar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Generar Amenaza Insecto");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -251,6 +261,14 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        p.pausar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        p.reanudar();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
